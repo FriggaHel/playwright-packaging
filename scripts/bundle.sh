@@ -1,4 +1,5 @@
 set -e
+uname -a
 echo "Using: $(which node)"
 rm -rf ./bundle/
 mkdir ./bundle/
