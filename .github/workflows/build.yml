@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  attach-artifact:
+    runs-on: macos-latest
+    steps:
+      - id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H:%M:%S')"
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - run: npm ci --production
+      - run: bash ./scripts/bundle.sh
+      - run: zip -r sauce-playwright-macos.zip bundle/
+
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.prep.outputs.release_id }}/assets?name=sauce-playwright-macos-${{ steps.date.outputs.date }}.zip
+          asset_path: ./sauce-playwright-macos.zip
+          asset_name: sauce-playwright-macos.zip
+          asset_content_type: application/zip
