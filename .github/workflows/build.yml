@@ -23,7 +23,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.prep.outputs.release_id }}/assets?name=sauce-playwright-macos-${{ steps.date.outputs.date }}.zip
+          upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/60171713/assets?name=sauce-playwright-macos-${{ steps.date.outputs.date }}.zip
           asset_path: ./sauce-playwright-macos.zip
           asset_name: sauce-playwright-macos.zip
           asset_content_type: application/zip
